@@ -113,7 +113,9 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	var enableTls bool
+	var port int
 	flag.BoolVar(&enableTls, "tls", false, "Enable TLS")
+	flag.IntVar(&port, "port", 8080, "port number")
 	flag.Parse()
 
 	mux := http.NewServeMux()
@@ -134,16 +136,16 @@ func main() {
 	}
 
 	go func() {
-		log.Println("Server is running on http://127.0.0.1:8080")
-		if err := http.ListenAndServe("127.0.0.1:8080", mux); err != nil {
+		log.Printf("Server is running on http://127.0.0.1:%d\n", port)
+		if err := http.ListenAndServe(fmt.Sprintf("127.0.0.1:%d", port), mux); err != nil {
 			log.Fatal(err)
 		}
 	}()
 
 	if enableTls {
 		go func() {
-			log.Println("Server is running on https://localhost:8080")
-			if err := http2.ListenAndServeTLS(mux, ":8080"); err != nil {
+			log.Printf("Server is running on https://localhost:%d\n", port)
+			if err := http2.ListenAndServeTLS(mux, fmt.Sprintf(":%d", port)); err != nil {
 				log.Println(err)
 			}
 		}()
