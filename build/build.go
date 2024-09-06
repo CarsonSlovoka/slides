@@ -12,6 +12,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"syscall"
@@ -32,7 +33,7 @@ func ZipSource() error {
 		hasher256 := sha256.New()
 		hasher256.Write(bytesZip)
 		hashStr := strings.ToUpper(hex.EncodeToString(hasher256.Sum(nil)))
-		hashContent := fmt.Sprintf("hashes.sha256\n\n%s\n%s\n", zipName, hashStr)
+		hashContent := fmt.Sprintf("hashes.sha256\n\n%s\n%s\n", filepath.Base(zipName), hashStr)
 		err = os.WriteFile("../bin/hash.md", []byte(hashContent), 0666) // 可以寫在release上，讓大家自行查看，能確認是否因網路下載而被中途串改資料
 		if err != nil {
 			log.Fatal(err)
