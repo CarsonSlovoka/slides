@@ -68,12 +68,50 @@ func init() {
   // Output:
   // Hello World
 }
-
 ```
 
 ---
 
 # reveal.js
+
+---
+
+## Content
+
+----
+
+### Code
+
+<pre>
+  <code data-line-numbers="3-5|8-10|12-13">
+    <table>
+      <tr>
+        <td>Apples</td>
+        <td>$1</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td>Oranges</td>
+        <td>$2</td>
+        <td>18</td>
+      </tr>
+    </table>
+    </code>
+</pre>
+
+Note:
+
+有scrollbar的時候會怪怪的
+
+----
+
+<pre><code data-line-numbers data-ln-start-from="7">
+<tr>
+  <td>Oranges</td>
+  <td>$2</td>
+  <td>18</td>
+</tr>
+</code></pre>
 
 ---
 
@@ -220,8 +258,6 @@ Note:
 
 ---
 
-<section id="review">
-
 # Review
 
 - <a href="#/slides">Slides</a>
@@ -229,13 +265,13 @@ Note:
 - <a href="#/revealjs">reveal.js</a>
   - <a href="#/jump-to">Jump To Slide</a>
 
-</section>
-
 Note:
 
 internal links
 
-> 注意markdown, heading生成的id，都是小寫的, `.`會被移除
+> 注意markdown, heading生成的id，都是小寫的, `.`會被移除，
+>
+> 例如: <a href="#/revealjs">reveal.js</a>
 
 ---
 
