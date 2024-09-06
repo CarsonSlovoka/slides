@@ -30,3 +30,17 @@ go build -ldflags "-s -w" -tags tmpl
 2. (optional ) 📜 slides.gohtml, 這是一個模板你可以抓取[預設的內容後修改](slides.gohtml), 如果你不想準備此模板，請用`go build -tags tmpl`去生成執行檔
 3. (optional ) 📂 assets: 如果你在md之中，有想要用img來加入本地的圖片，可以考慮將圖片路徑保存在此目錄。使用連結`/assets`會自動以此目錄為相對位置開始找尋
 
+啟動上可以直接
+```yaml
+slides.exe
+slides.exe -port=12345 # port預設用8080, 如果被佔用或者不喜歡可以改成其他，或者指定為0會自動抓取
+
+# 如果你不喜歡把幻燈片都保存在md的目錄，你可以自定義您的目錄名稱，啟動上使用-md來告知
+slides.exe -md="mySlides"
+```
+
+或者用https
+
+```
+slides.exe -tls
+```

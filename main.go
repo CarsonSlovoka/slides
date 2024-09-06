@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	textTemplate "text/template"
 )
 
 //go:embed reveal.js/dist/reveal.js
@@ -26,7 +27,7 @@ import (
 var revealFS embed.FS
 
 //go:embed help.md
-var helpFS []byte
+var helpBytes []byte
 
 func HandleHelp(w http.ResponseWriter, r *http.Request) {
 	md := markdown.New()
@@ -41,8 +42,23 @@ func HandleHelp(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	// 將 helpBytes 中的 context 做置換
+	helpGoHtml, err := textTemplate.New("").Funcs(nil).Parse(string(helpBytes))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	resolveContent := bytes.NewBuffer(nil)
+	if err = helpGoHtml.Execute(resolveContent, map[string]string{
+		"MDName": mdFolderName,
+	}); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	mdBuf := bytes.NewBuffer(nil)
-	if err = md.Convert(helpFS, mdBuf); err != nil {
+	if err = md.Convert(resolveContent.Bytes(), mdBuf); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -60,7 +76,7 @@ func HandleListMD(w http.ResponseWriter, r *http.Request) {
 	html := `<head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"></head>
 <main class=container><ul>
 `
-	if err := filepath.Walk("./md", func(p string, info fs.FileInfo, err error) error {
+	if err := filepath.Walk(fmt.Sprintf("./%s", mdFolderName), func(p string, info fs.FileInfo, err error) error {
 		if info.IsDir() || filepath.Ext(strings.ToLower(p)) != ".md" {
 			return nil
 		}
@@ -82,11 +98,11 @@ func HandleListMD(w http.ResponseWriter, r *http.Request) {
 // HandleTxt 回傳md目錄下的檔案內容，視為純文本
 func HandleTxt(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
-	http.StripPrefix("/txt/", http.FileServer(http.Dir("md"))).ServeHTTP(w, r)
+	http.StripPrefix("/txt/", http.FileServer(http.Dir(mdFolderName))).ServeHTTP(w, r)
 }
 
 func HandleMD(w http.ResponseWriter, r *http.Request) {
-	if filepath.Ext(r.URL.Path) != ".md" {
+	if strings.ToLower(filepath.Ext(r.URL.Path)) != ".md" {
 		// 使如果你將圖片放在md的目錄中，也能夠顯示
 		http.FileServer(http.Dir(".")).ServeHTTP(w, r)
 		return
@@ -163,19 +179,23 @@ func init() {
 	}
 }
 
+var mdFolderName string
+
 func main() {
 	var enableTls bool
 	var port int
+
 	flag.BoolVar(&enableTls, "tls", false, "Enable TLS")
 	flag.IntVar(&port, "port", 8080, "port number")
+	flag.StringVar(&mdFolderName, "md", "md", "md folder")
 	flag.Parse()
 
 	mux := http.NewServeMux()
 	mux.Handle("GET /reveal.js/", http.FileServerFS(revealFS))
 	mux.HandleFunc("GET /help", HandleHelp)
 	mux.HandleFunc("GET /txt/", HandleTxt)
-	mux.HandleFunc("GET /md", HandleListMD)
-	mux.HandleFunc("GET /md/{mdPath...}", HandleMD)
+	mux.HandleFunc(fmt.Sprintf("GET /%s", mdFolderName), HandleListMD)
+	mux.HandleFunc(fmt.Sprintf("GET /%s/{mdPath...}", mdFolderName), HandleMD)
 	mux.Handle("GET /assets/", http.FileServer(http.Dir(".")))
 	mux.HandleFunc("/", HandleHelp)
 
