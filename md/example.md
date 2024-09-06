@@ -115,6 +115,37 @@ Note:
 
 ---
 
+## Backgrounds
+
+
+> ❗ 使用`data-background-color`不要用於vertical
+
+---
+
+`data-background-color="rgb(70, 70, 255)"`
+
+<section data-background-color="rgb(70, 70, 255)">
+  <h2>🍰</h2>
+</section>
+
+---
+
+`data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)"`
+
+<section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+  <h2>🐟</h2>
+</section>
+
+---
+
+`data-background-gradient="radial-gradient(#283b95, #17b2c3)"`
+
+<section data-background-gradient="radial-gradient(#283b95, #17b2c3)">
+  <h2>🐳</h2>
+</section>
+
+---
+
 ## Features
 
 ----
