@@ -2,7 +2,11 @@
 
 主要透過[reveal.js](https://github.com/hakimel/reveal.js)來生成投影片
 
-## install
+## Download
+
+您可以自己[Build](#build)，如果不想要建立，可以到[release的頁面下](https://github.com/CarsonSlovoka/slides/releases)下載對應平台的zip檔案，裡面有build完成的執行檔
+
+## Build
 
 ```yaml
 git clone https://github.com/CarsonSlovoka/slides.git
