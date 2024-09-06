@@ -78,6 +78,16 @@ func Example_Println() {
 
 ## animate
 
+
+Note:
+
+[Note](https://revealjs.com/speaker-view/#adding-the-speaker-notes-plugin)
+
+> 動畫下一步是用 `↓`因此接`data-separator-vertical`會有問題
+
+- note項目符號測試
+- note2
+
 ---
 
 ### data-auto-animate

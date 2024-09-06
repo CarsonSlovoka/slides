@@ -13,6 +13,8 @@
     <section data-markdown="{{.MDPath}}" {{/* test.md */}}
              data-separator="^\n---\n"
              data-separator-vertical="^\n----\n"
+
+             {{/* plugin */}}
              data-separator-notes="^Note:"
     >
     </section>
@@ -20,6 +22,7 @@
 </div>
 
 <script src="/reveal.js/dist/reveal.js"></script>
+
 <script src="/reveal.js/plugin/markdown/markdown.js"></script>
 <script src="/reveal.js/plugin/notes/notes.js"></script>
 <script>
@@ -27,7 +30,7 @@
     // Optional
     plugins: [
       RevealMarkdown,
-      RevealNotes
+      RevealNotes,
     ],
     slideNumber: true,
   })

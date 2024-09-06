@@ -18,7 +18,7 @@ import (
 //go:embed reveal.js/dist/reveal.css
 //go:embed reveal.js/dist/reset.css
 //go:embed reveal.js/dist/theme/*css
-//go:embed reveal.js/plugin/markdown/markdown.js
+//go:embed reveal.js/plugin/**/*.js
 var revealFS embed.FS
 
 //go:embed help.md
