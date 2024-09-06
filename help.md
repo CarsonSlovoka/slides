@@ -1,8 +1,9 @@
 ## USAGE
 
-1. 在此執行檔下的目錄放置[slides.gohtml](slides.gohtml)，你可以適當的修改
-2. [md](md)目錄之中可以放想要投影的投影片內容
-3. 訪問連結 /demo/[位於md資料夾的md檔案名稱](md)
+1. 在執行檔下的目錄放置[slides.gohtml](https://github.com/CarsonSlovoka/slides/blob/master/slides.gohtml)，你可以適當的修改
+2. [md](https://github.com/CarsonSlovoka/slides/tree/master/md)目錄之中可以放想要投影的投影片內容
+3. 訪問連結 `/demo/<位於md資料夾的md檔案名稱>`
+    - example: [demo](/md/example.md)
 
 ## 下載成pdf
 
@@ -11,3 +12,11 @@
 ```
 ?print-pdf
 ```
+
+> demo: [md/example.md?print-pdf](/md/example.md?print-pdf)
+
+## 變更主題顏色
+
+theme=[?](https://github.com/hakimel/reveal.js/tree/472535065c7525abf0cc9df51c66f19fd2d2204f/dist/theme)
+
+> demo: [md/example.md?theme=sky](/md/example.md?theme=sky)

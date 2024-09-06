@@ -65,6 +65,11 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 	}
 
 	query := r.URL.Query()
+	theme := query.Get("theme")
+	if theme == "" {
+		// https://revealjs.com/themes/
+		theme = "black"
+	}
 
 	tmpl, err := htmlTemplate.New("slides.gohtml").Funcs(map[string]any{
 		"unsafeHTML": func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
@@ -77,6 +82,7 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 	if err = tmpl.Execute(w, map[string]any{
 		"Title":  query.Get("title"),
 		"MDPath": "/txt/" + r.PathValue("mdPath"), // 我們讓其導向 HandleTxt
+		"Theme":  theme,
 	}); err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
