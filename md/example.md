@@ -1,6 +1,6 @@
 # Slides
 
-2024/09/22
+2024/09/05
 
 Carson Tseng
 
@@ -62,12 +62,13 @@ package main
 
 import "fmt"
 
-func Example_Println() {
+func init() {
   fmt.Println("Hello World")
 
   // Output:
   // Hello World
 }
+
 ```
 
 ---
@@ -76,8 +77,28 @@ func Example_Println() {
 
 ---
 
-## animate
+## Features
 
+----
+
+### [Jump to Slide](https://revealjs.com/jump-to-slide/)
+
+Press <key>G</key>, type a slide `number` or `id`
+
+| Input   | Result |
+|---------| ---- |
+| 5       | Navigate to slide number 5
+| 11/2    | Navigate to horizontal slide 11, vertical slide 2
+| 11.2    | same as above
+| the-end | Navigate to a slide with this id (for example: `<section id="the-end">`, `<p id="the-end">`)
+
+Note:
+
+使用id的時候，不需要打完全名也可以搜尋
+
+---
+
+## animate
 
 Note:
 
@@ -186,4 +207,14 @@ Note:
 
 ---
 
-## Thanks
+<section id="review">
+
+## Review
+
+
+</section>
+
+
+---
+
+<h2 id="the-end">Thanks</h2>
