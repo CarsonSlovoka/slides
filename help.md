@@ -1,9 +1,15 @@
+## 查看你的幻燈片清單
+
+> 👉 [/md](/md)
+
 ## USAGE
 
 1. 在執行檔下的目錄放置[slides.gohtml](https://github.com/CarsonSlovoka/slides/blob/master/slides.gohtml)，你可以適當的修改
 2. [md](https://github.com/CarsonSlovoka/slides/tree/master/md)目錄之中可以放想要投影的投影片內容
 3. 訪問連結 `/demo/<位於md資料夾的md檔案名稱>`
     - example: [demo](/md/example.md)
+
+> 有關於example.md的內容，可以[至此下載](https://github.com/CarsonSlovoka/slides/blob/master/md/example.md)後存放到md的目錄之中
 
 ## 可選項:
 

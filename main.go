@@ -8,12 +8,14 @@ import (
 	http2 "github.com/CarsonSlovoka/slides/internal/http"
 	"github.com/CarsonSlovoka/slides/internal/markdown"
 	htmlTemplate "html/template"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"reflect"
 	"strconv"
+	"strings"
 )
 
 //go:embed reveal.js/dist/reveal.js
@@ -32,9 +34,7 @@ func HandleHelp(w http.ResponseWriter, r *http.Request) {
 		"unsafeHTML": func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
 	}).Parse(
 		`
-<head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-</head>
+<head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"></head>
 <main class="container">{{unsafeHTML .MD}}</main>
 `)
 	if err != nil {
@@ -55,8 +55,28 @@ func HandleHelp(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// HandleListMD 查看所有能投影的清單 (也就是位於./md目錄之中所有的md檔案)
 func HandleListMD(w http.ResponseWriter, r *http.Request) {
-	// todo 顯示 md目錄之中的所有md檔案
+	html := `<head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"></head>
+<main class=container><ul>
+`
+	if err := filepath.Walk("./md", func(p string, info fs.FileInfo, err error) error {
+		if info.IsDir() || filepath.Ext(strings.ToLower(p)) != ".md" {
+			return nil
+		}
+
+		html += fmt.Sprintf("<li><a href=\"%s\">%s</a></li>\n",
+			filepath.ToSlash(p), // convert to forward slash
+			p,
+		)
+		return nil
+	}); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	html += "</ul></main>"
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_, _ = fmt.Fprintf(w, html)
 }
 
 // HandleTxt 回傳md目錄下的檔案內容，視為純文本
@@ -153,8 +173,8 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("GET /reveal.js/", http.FileServerFS(revealFS))
 	mux.HandleFunc("GET /help", HandleHelp)
-	mux.HandleFunc("GET /md", HandleListMD)
 	mux.HandleFunc("GET /txt/", HandleTxt)
+	mux.HandleFunc("GET /md", HandleListMD)
 	mux.HandleFunc("GET /md/{mdPath...}", HandleMD)
 	mux.Handle("GET /assets/", http.FileServer(http.Dir(".")))
 	mux.HandleFunc("/", HandleHelp)
