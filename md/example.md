@@ -83,6 +83,8 @@ func init() {
 
 ### [Jump to Slide](https://revealjs.com/jump-to-slide/)
 
+<span id="jump-to"></span>
+
 Press <key>G</key>, type a slide `number` or `id`
 
 | Input   | Result |
@@ -220,11 +222,20 @@ Note:
 
 <section id="review">
 
-## Review
+# Review
 
+- <a href="#/slides">Slides</a>
+- <a href="#/markdown">Markdown</a>
+- <a href="#/revealjs">reveal.js</a>
+  - <a href="#/jump-to">Jump To Slide</a>
 
 </section>
 
+Note:
+
+internal links
+
+> 注意markdown, heading生成的id，都是小寫的, `.`會被移除
 
 ---
 
