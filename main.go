@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"reflect"
+	"strconv"
 )
 
 //go:embed reveal.js/dist/reveal.js
@@ -65,10 +66,26 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 	}
 
 	query := r.URL.Query()
-	theme := query.Get("theme")
-	if theme == "" {
+	var theme string
+	if query["theme"] != nil {
 		// https://revealjs.com/themes/
+		theme = query.Get("theme")
+	}
+	if theme == "" {
 		theme = "black"
+	}
+
+	view := query.Get("view")
+
+	var autoSlide uint64
+	if millSec := query.Get("autoSlide"); millSec != "" {
+		log.Println("autoSlide not working on view=scroll")
+		var err error
+		autoSlide, err = strconv.ParseUint(millSec, 10, 64)
+		if err != nil {
+			log.Println(err)
+			autoSlide = 0
+		}
 	}
 
 	tmpl, err := htmlTemplate.New("slides.gohtml").Funcs(map[string]any{
@@ -80,9 +97,11 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = tmpl.Execute(w, map[string]any{
-		"Title":  query.Get("title"),
-		"MDPath": "/txt/" + r.PathValue("mdPath"), // 我們讓其導向 HandleTxt
-		"Theme":  theme,
+		"Title":     query.Get("title"),
+		"MDPath":    "/txt/" + r.PathValue("mdPath"), // 我們讓其導向 HandleTxt
+		"Theme":     theme,
+		"View":      view,
+		"AutoSlide": autoSlide,
 	}); err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)

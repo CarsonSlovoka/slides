@@ -15,6 +15,10 @@
 
 > demo: [md/example.md?print-pdf](/md/example.md?print-pdf)
 
+## View
+
+> demo: [md/example.md?view=scroll](/md/example.md?view=scroll)
+
 ## 變更主題顏色
 
 theme=[?](https://github.com/hakimel/reveal.js/tree/472535065c7525abf0cc9df51c66f19fd2d2204f/dist/theme)

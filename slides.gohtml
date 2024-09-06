@@ -28,7 +28,7 @@
 <script src="/reveal.js/plugin/markdown/markdown.js"></script>
 <script src="/reveal.js/plugin/notes/notes.js"></script>
 <script>
-  Reveal.initialize({
+  const optional = {
     // Optional
     plugins: [
       RevealMarkdown,
@@ -36,20 +36,27 @@
     ],
     slideNumber: true,
 
-    // Scroll (Overview O會不能使用)
-    // Activate the scroll view
-    // view: 'scroll',
-    // Force the scrollbar to remain visible
-    // scrollProgress: true,
-
-    // autoSlide: https://revealjs.com/auto-slide/
-    // 需要啟用之後, 使用data-autoslide=""的項目才會生效, 會先跑完預設再跑接續設定的時間
-    autoSlide: 5000,
-    // loop: true,
-
     // 下面都是預設值，其實可以不需要寫，只是為了更加清楚，所以新增它
     jumpToSlide: true,
-  })
+  }
+
+  {{if gt (len .View) 0 }}
+    // Overview <kbd>O</kbd會不能使用
+    // Activate the scroll view
+    optional["view"] = {{.View}}
+
+    // Force the scrollbar to remain visible
+    optional["scrollProgress"] = 'true'
+  {{end}}
+
+  {{if gt .AutoSlide 0 }}
+    // autoSlide: https://revealjs.com/auto-slide/
+    // 需要啟用之後, 使用data-autoslide=""的項目才會生效, 會先跑完預設再跑接續設定的時間
+    optional["autoSlide"] = {{.AutoSlide}}
+    // optional["loop"] = true // 垂直模式下會再回到一開始
+  {{end}}
+
+  Reveal.initialize(optional)
 </script>
 </body>
 </html>
