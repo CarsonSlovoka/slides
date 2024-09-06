@@ -29,7 +29,13 @@ func HandleHelp(w http.ResponseWriter, r *http.Request) {
 	md := markdown.New()
 	tmpl, err := htmlTemplate.New("").Funcs(map[string]any{
 		"unsafeHTML": func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
-	}).Parse("{{unsafeHTML .MD}}")
+	}).Parse(
+		`
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<main class="container">{{unsafeHTML .MD}}</main>
+`)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
