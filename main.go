@@ -10,6 +10,7 @@ import (
 	htmlTemplate "html/template"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strconv"
@@ -95,10 +96,16 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 			autoSlide = 0
 		}
 	}
-
-	tmpl, err := htmlTemplate.New("slides.gohtml").Funcs(map[string]any{
+	tmpl := htmlTemplate.New("slides.gohtml").Funcs(map[string]any{
 		"unsafeHTML": func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
-	}).ParseFiles("slides.gohtml")
+	})
+	var err error
+	if _, err = os.Stat("slides.gohtml"); err == nil {
+		// 我們選擇直接讀檔的方式，這樣可以提供即時修改也不需要再重新啟動程式
+		tmpl, err = tmpl.ParseFiles("slides.gohtml")
+	} else {
+		tmpl, err = tmpl.Parse(string(slidesTmplBytes))
+	}
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -114,6 +121,25 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+}
+
+func init() {
+	if _, err := os.Stat("slides.gohtml"); !os.IsNotExist(err) {
+		// 如果找尋的到使用者自己提供的slides.gohtml模板內容就已使用者提供的為準
+		if slidesTmplBytes != nil {
+			log.Println("overwrite slidesTmplBytes")
+		}
+		slidesTmplBytes, err = os.ReadFile("slides.gohtml")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// 如果你的打包預設有將模板匯入go build -tags tmpl
+	// 那麼 slidesTmplBytes 可以有預設的嵌入內容
+	if slidesTmplBytes == nil {
+		log.Fatal("you must provide `slides.gohtml`")
 	}
 }
 
