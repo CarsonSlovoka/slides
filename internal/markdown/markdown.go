@@ -1,3 +1,5 @@
+// Package markdown 此包並非必須，只是為了在某些頁面能將md渲染成好看的html罷了
+
 package markdown
 
 import (
