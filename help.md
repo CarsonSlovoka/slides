@@ -5,7 +5,13 @@
 3. 訪問連結 `/demo/<位於md資料夾的md檔案名稱>`
     - example: [demo](/md/example.md)
 
-## 下載成pdf
+## 可選項:
+
+所有的可選項透過GET.query的參數設定，你可以將多個可選項用`&`組合起來
+
+> demo: [md/example.md?theme=sky&autoSlide=5000](/md/example.md?theme=sky&autoSlide=5000)
+
+### 下載成pdf
 
 請於網址最後面補上`?print-pdf`，在使用列印(<kbd>Ctrl+P</kbd>)即可
 
@@ -15,12 +21,20 @@
 
 > demo: [md/example.md?print-pdf](/md/example.md?print-pdf)
 
-## View
+### View
 
 > demo: [md/example.md?view=scroll](/md/example.md?view=scroll)
 
-## 變更主題顏色
+### 變更主題顏色
 
 theme=[?](https://github.com/hakimel/reveal.js/tree/472535065c7525abf0cc9df51c66f19fd2d2204f/dist/theme)
 
 > demo: [md/example.md?theme=sky](/md/example.md?theme=sky)
+
+### autoSlide
+
+`?autoSlide=<毫秒>`
+
+按下快捷鍵<kbd>A</kbd>可以Toggle
+
+> demo: [md/example.md?autoSlide=5000](/md/example.md?autoSlide=5000)

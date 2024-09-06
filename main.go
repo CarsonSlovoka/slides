@@ -79,7 +79,9 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 
 	var autoSlide uint64
 	if millSec := query.Get("autoSlide"); millSec != "" {
-		log.Println("autoSlide not working on view=scroll")
+		if view == "scroll" {
+			log.Println("autoSlide not working on view=scroll")
+		}
 		var err error
 		autoSlide, err = strconv.ParseUint(millSec, 10, 64)
 		if err != nil {
