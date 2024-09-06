@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{.Title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="/reveal.js/dist/theme/dracula.css">
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section data-markdown="{{.MDPath}}" {{/* test.md */}}
+             data-separator="^\n---\n"
+             data-separator-vertical="^\n----\n"
+             data-separator-notes="^Note:"
+    >
+    </section>
+  </div>
+</div>
+
+<script src="/reveal.js/dist/reveal.js"></script>
+<script src="/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="/reveal.js/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    // Optional
+    plugins: [
+      RevealMarkdown,
+      RevealNotes
+    ],
+    slideNumber: true,
+  })
+</script>
+</body>
+</html>
