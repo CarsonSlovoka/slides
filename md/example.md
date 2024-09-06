@@ -92,9 +92,20 @@ Press <key>G</key>, type a slide `number` or `id`
 | 11.2    | same as above
 | the-end | Navigate to a slide with this id (for example: `<section id="the-end">`, `<p id="the-end">`)
 
+
 Note:
 
 使用id的時候，不需要打完全名也可以搜尋
+
+----
+
+## [Auto-Slide](https://revealjs.com/auto-slide/)
+
+<p class="fragment" data-autoslide="20000">
+
+It's also possible to pause or resume sliding by pressing <kbd>A</kbd>
+
+</p>
 
 ---
 
