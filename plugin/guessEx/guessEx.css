@@ -1,0 +1,19 @@
+[data-guess-ex] {
+  position: relative;
+  display: block;
+  background-size: cover;
+  background-position: center;
+}
+
+.blur-elem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: inherit;
+  background-size: inherit;
+  background-position: inherit;
+  filter: blur(var(--blur)) grayscale(var(--grayscale));
+  transition: filter 0.3s ease;
+}

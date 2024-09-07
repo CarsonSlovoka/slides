@@ -28,6 +28,10 @@ import (
 //go:embed reveal.js/plugin/**/*.css
 var revealFS embed.FS
 
+//go:embed plugin/**/*.css
+//go:embed plugin/**/*.mjs
+var pluginFS embed.FS
+
 //go:embed help.md
 var helpBytes []byte
 
@@ -201,6 +205,12 @@ func main() {
 	mux.HandleFunc(fmt.Sprintf("GET /%s", mdFolderName), HandleListMD)
 	mux.HandleFunc(fmt.Sprintf("GET /%s/{mdPath...}", mdFolderName), HandleMD)
 	mux.Handle("GET /assets/", http.FileServer(http.Dir(".")))
+
+	// 我們內嵌的plugin
+	mux.Handle("/slides/plugin/", http.StripPrefix("/slides/", http.FileServerFS(pluginFS)))
+	// 讓使用者有辦法載入自己的plugin
+	mux.Handle("/plugin/", http.FileServer(http.Dir(".")))
+
 	mux.HandleFunc("/", HandleHelp)
 
 	fmt.Println("site routes:")

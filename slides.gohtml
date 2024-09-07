@@ -25,6 +25,7 @@
 
 <script src="/reveal.js/dist/reveal.js"></script>
 
+{{/* 👇 reveal.js Plugin */}}
 <script src="/reveal.js/plugin/markdown/markdown.js"></script>
 <script src="/reveal.js/plugin/notes/notes.js"></script>
 <script src="/reveal.js/plugin/search/search.js"></script>
@@ -32,7 +33,20 @@
 
 <link rel="stylesheet" href="/reveal.js/plugin/highlight/monokai.css" />
 <script src="/reveal.js/plugin/highlight/highlight.js"></script>
-<script>
+
+{{/* 👇 slides Plugin */}}
+<link rel="stylesheet" href="/slides/plugin/guessEx/guessEx.css"/>
+
+{{/* 👇 Customize Plugin */}}
+
+<script type="module">
+  {{/* slides Plugin */}}
+  import SlidesGuessEx from "/slides/plugin/guessEx/guessEx.mjs"
+
+  {{/* Customize Plugin */}}
+  // import YourPlugin from "/plugin/.../.mjs"
+
+  // https://revealjs.com/config/
   const optional = {
     // Optional
     plugins: [
@@ -41,6 +55,8 @@
       RevealHighlight,
       RevealSearch, // CTRL+Shift+F
       RevealZoom, // Alt+click; CTRL+click in Linux
+
+      SlidesGuessEx,
     ],
     slideNumber: true,
 
@@ -65,6 +81,9 @@
   {{end}}
 
   Reveal.initialize(optional)
+
+  // Reveal.initialize(optional) 對於每一個plugin的動作相當如下
+  // Reveal.addEventListener('ready', SlidesGuessEx().init())
 </script>
 </body>
 </html>
