@@ -207,9 +207,9 @@ func main() {
 	mux.Handle("GET /assets/", http.FileServer(http.Dir(".")))
 
 	// 我們內嵌的plugin
-	mux.Handle("/slides/plugin/", http.StripPrefix("/slides/", http.FileServerFS(pluginFS)))
+	mux.Handle("GET /slides/plugin/", http.StripPrefix("/slides/", http.FileServerFS(pluginFS)))
 	// 讓使用者有辦法載入自己的plugin
-	mux.Handle("/plugin/", http.FileServer(http.Dir(".")))
+	mux.Handle("GET /plugin/", http.FileServer(http.Dir(".")))
 
 	mux.HandleFunc("/", HandleHelp)
 
