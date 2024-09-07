@@ -16,7 +16,7 @@
              data-separator="^\n---\n"
              data-separator-vertical="^\n----\n"
 
-             {{/* plugin */}}
+      {{/* plugin */}}
              data-separator-notes="^Note:"
     >
     </section>
@@ -31,7 +31,7 @@
 <script src="/reveal.js/plugin/search/search.js"></script>
 <script src="/reveal.js/plugin/zoom/zoom.js"></script>
 
-<link rel="stylesheet" href="/reveal.js/plugin/highlight/monokai.css" />
+<link rel="stylesheet" href="/reveal.js/plugin/highlight/monokai.css"/>
 <script src="/reveal.js/plugin/highlight/highlight.js"></script>
 
 {{/* 👇 slides Plugin */}}
@@ -58,6 +58,15 @@
 
       SlidesGuessEx,
     ],
+    /*
+    // dependencies 如果有，那麼裡面的內容不能為空，否則會遇到錯誤: Unrecognized plugin format
+    dependencies: [
+      {
+        // src: "/plugin/spotlight.js" // https://github.com/denniskniep/reveal.js-plugin-spotlight // 可用但效果不好
+      }
+    ],
+    */
+
     slideNumber: true,
 
     // 下面都是預設值，其實可以不需要寫，只是為了更加清楚，所以新增它
