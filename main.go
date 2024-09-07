@@ -23,7 +23,9 @@ import (
 //go:embed reveal.js/dist/reveal.css
 //go:embed reveal.js/dist/reset.css
 //go:embed reveal.js/dist/theme/*css
+//go:embed reveal.js/dist/theme/fonts/*
 //go:embed reveal.js/plugin/**/*.js
+//go:embed reveal.js/plugin/**/*.css
 var revealFS embed.FS
 
 //go:embed help.md
@@ -146,6 +148,8 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
 	if err = tmpl.Execute(w, map[string]any{
 		"Title":     query.Get("title"),
