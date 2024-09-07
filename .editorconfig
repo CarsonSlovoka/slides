@@ -15,7 +15,7 @@ end_of_line = crlf
 [*.{go,puml,nsi,nsh,Makefile,mk}]
 indent_style = tab
 
-[*.{md,yml,yaml,json,json5,js,ts,mts,css,html,gohtml,gotmpl,toml,scss,sass,xml,lua,vue}]
+[*.{md,yml,yaml,json,json5,js,mjs,ts,mts,css,html,gohtml,gotmpl,toml,scss,sass,xml,lua,vue}]
 indent_size = 2
 
 [*.{md,html}]
