@@ -44,3 +44,14 @@ slides.exe -md="mySlides"
 ```
 slides.exe -tls
 ```
+
+## 自定義插件
+
+可以參考[此commit](https://github.com/CarsonSlovoka/slides/commit/b239af8f9b9ffcf27bbb8b00e46e9f2fb516cf47)
+
+裡面製作了一個[guessEx的插件](https://github.com/CarsonSlovoka/slides/blob/b239af8f9b9ffcf27bbb8b00e46e9f2fb516cf47/plugin/guessEx/guessEx.mjs)
+
+當你製作好plugin之後，可以在工作目錄下建立一個plugin的目錄，將其內容放入[即可被程式抓到](https://github.com/CarsonSlovoka/slides/blob/68d94531130c50deb653260bcb094f11cf03071b/main.go#L212)
+
+之後[建立屬於您自己的slides.gohtml，導入該plugin](https://github.com/CarsonSlovoka/slides/blob/68d94531130c50deb653260bcb094f11cf03071b/slides.gohtml#L47)即可
+
