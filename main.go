@@ -30,6 +30,7 @@ var revealFS embed.FS
 
 //go:embed plugin/**/*.css
 //go:embed plugin/**/*.mjs
+//go:embed plugin/**/*.js
 var pluginFS embed.FS
 
 //go:embed help.md
