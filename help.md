@@ -45,7 +45,7 @@
 
 ### 變更主題顏色
 
-theme=[?](https://github.com/hakimel/reveal.js/tree/472535065c7525abf0cc9df51c66f19fd2d2204f/dist/theme)
+theme=[?](https://github.com/hakimel/reveal.js/tree/472535065c7525abf0cc9df51c66f19fd2d2204f/dist/theme), [overview](https://revealjs.com/themes/)
 
 > demo: [{{.MDName}}/example.md?theme=sky](/{{.MDName}}/example.md?theme=sky)
 
