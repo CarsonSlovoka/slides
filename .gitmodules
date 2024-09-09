@@ -1,3 +1,6 @@
 [submodule "reveal.js"]
 	path = reveal.js
 	url = https://github.com/hakimel/reveal.js.git
+[submodule "plugin/guess"]
+	path = plugin/guess
+	url = https://github.com/slidesplugin/guess.git

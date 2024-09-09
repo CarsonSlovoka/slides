@@ -42,6 +42,7 @@
 <script type="module">
   {{/* slides Plugin */}}
   import SlidesGuessEx from "/slides/plugin/guessEx/guessEx.mjs"
+  import SlidesGuess from "/slides/plugin/guess/guess.mjs"
   import {Spotlight} from "/slides/plugin/spotlight/spotlight.js"
 
   {{/* Customize Plugin */}}
@@ -58,6 +59,7 @@
       RevealZoom, // Alt+click; CTRL+click in Linux
 
       SlidesGuessEx,
+      SlidesGuess.init(5, 1),
       Spotlight,
     ],
     /*

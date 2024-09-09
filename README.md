@@ -12,6 +12,7 @@
 git clone https://github.com/CarsonSlovoka/slides.git
 cd slides
 git submodule update --init --recursive reveal.js
+git submodule update --init --recursive plugin/guess
 # go install -ldflags "-s -w" -tags tmpl  # 執行檔GOPATH/bin目錄
 go build -ldflags "-s -w" -tags tmpl
 ```
