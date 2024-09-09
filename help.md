@@ -36,7 +36,7 @@
 - [x] 背景圖形
 ```
 
-![print-pdf_config.png](assets/print-pdf_config.png)
+![print-pdf_config.png](https://github.com/CarsonSlovoka/slides/blob/master/assets/print-pdf_config.png?raw=true)
 
 
 ### View
