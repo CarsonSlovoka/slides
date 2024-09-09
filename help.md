@@ -28,6 +28,17 @@
 
 > demo: [{{.MDName}}/example.md?print-pdf](/{{.MDName}}/example.md?print-pdf)
 
+❗ 列印的時候，請選擇 `更多設定`，調整如下: (否則有的版面會很奇怪)
+
+```
+邊界: 無
+- [ ] 頁首及頁尾  # 僅在邊界不為`無`才會出現
+- [x] 背景圖形
+```
+
+![print-pdf_config.png](assets/print-pdf_config.png)
+
+
 ### View
 
 > demo: [{{.MDName}}/example.md?view=scroll](/{{.MDName}}/example.md?view=scroll)
