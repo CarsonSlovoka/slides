@@ -84,6 +84,10 @@ func HandleListMD(w http.ResponseWriter, r *http.Request) {
 <main class=container><ul>
 `
 	if err := filepath.Walk(fmt.Sprintf("./%s", mdFolderName), func(p string, info fs.FileInfo, err error) error {
+		if info == nil {
+			return fmt.Errorf("file %s does not exist, 請確定你的工作路徑是否正確", p)
+		}
+
 		if info.IsDir() || filepath.Ext(strings.ToLower(p)) != ".md" {
 			return nil
 		}
