@@ -44,6 +44,8 @@
   import SlidesGuessEx from "/slides/plugin/guessEx/guessEx.mjs"
   import SlidesGuess from "/slides/plugin/guess/guess.mjs"
   import {Spotlight} from "/slides/plugin/spotlight/spotlight.js"
+  import Marker from "/slides/plugin/marker/marker.mjs"
+  // Marker.config.solidPenLineWidth.val = 50 // 如果要改相關設定可以這樣
 
   {{/* Customize Plugin */}}
   // import YourPlugin from "/plugin/.../.mjs"
@@ -61,6 +63,7 @@
       SlidesGuessEx,
       SlidesGuess.init(5, 1),
       Spotlight,
+      Marker.init(),
     ],
     /*
     // dependencies 如果有，那麼裡面的內容不能為空，否則會遇到錯誤: Unrecognized plugin format
