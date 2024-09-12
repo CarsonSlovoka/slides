@@ -7,6 +7,7 @@ import (
 	"fmt"
 	http2 "github.com/CarsonSlovoka/slides/internal/http"
 	"github.com/CarsonSlovoka/slides/internal/markdown"
+	"github.com/CarsonSlovoka/slides/internal/tmpl/funcs"
 	htmlTemplate "html/template"
 	"io/fs"
 	"log"
@@ -108,8 +109,37 @@ func HandleListMD(w http.ResponseWriter, r *http.Request) {
 
 // HandleTxt 回傳md目錄下的檔案內容，視為純文本
 func HandleTxt(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/plain")
-	http.StripPrefix("/txt/", http.FileServer(http.Dir(mdFolderName))).ServeHTTP(w, r)
+	query := r.URL.Query()
+	if query["raw"] != nil {
+		// 直接返回文本內容
+		w.Header().Set("Content-Type", "text/plain")
+		http.StripPrefix("/txt/", http.FileServer(http.Dir(mdFolderName))).ServeHTTP(w, r)
+		return
+	}
+
+	mdPath := filepath.Join(mdFolderName, r.URL.Path[5:])
+	bs, err := os.ReadFile(mdPath)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// 用go template處理之後再返回
+	tmpl := htmlTemplate.New("").Funcs(map[string]any{
+		"dict":       funcs.Dict,
+		"list":       funcs.List, // slice 已經是保留字了，所以用list
+		"unsafeHTML": func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
+	})
+	tmpl, err = tmpl.Parse(string(bs))
+	if err != nil {
+		log.Printf("%s: %s\n", mdPath, err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err = tmpl.Execute(w, nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func HandleMD(w http.ResponseWriter, r *http.Request) {
@@ -157,12 +187,16 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	mdPath := "/txt/" + r.PathValue("mdPath") // 我們讓其導向 HandleTxt
+	if query["raw"] != nil {
+		mdPath += "?raw"
+	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
 	if err = tmpl.Execute(w, map[string]any{
 		"Title":     query.Get("title"),
-		"MDPath":    "/txt/" + r.PathValue("mdPath"), // 我們讓其導向 HandleTxt
+		"MDPath":    mdPath,
 		"Theme":     theme,
 		"View":      view,
 		"AutoSlide": autoSlide,

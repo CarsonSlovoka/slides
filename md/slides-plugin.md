@@ -45,9 +45,6 @@
 
 ---
 
-
----
-
 ## GuessEx
 
 - [clip-path](https://bennettfeely.com/clippy/)
@@ -77,4 +74,6 @@ Note:
 
 輸入好寬高，右邊可以選擇`Custom Polygon`就可以任意添加多個點去框出自己想要的區域
 
-## Thanks
+---
+
+## [Thanks](./index.md)

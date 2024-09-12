@@ -20,9 +20,6 @@ from root
 
 ![go.png](/assets/go.png)
 
-
-----
-
 ---
 
 # Markdown
