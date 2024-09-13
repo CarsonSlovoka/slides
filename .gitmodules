@@ -5,5 +5,5 @@
 	path = plugin/guess
 	url = https://github.com/slidesplugin/guess.git
 [submodule "plugin/marker"]
-	path = plugin/guess
+	path = plugin/marker
 	url = https://github.com/slidesplugin/marker.git
