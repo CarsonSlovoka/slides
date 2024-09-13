@@ -13,6 +13,7 @@ git clone https://github.com/CarsonSlovoka/slides.git
 cd slides
 git submodule update --init --recursive reveal.js
 git submodule update --init --recursive plugin/guess
+git submodule update --init --recursive plugin/marker
 # go install -ldflags "-s -w" -tags tmpl  # 執行檔GOPATH/bin目錄
 go build -ldflags "-s -w" -tags tmpl
 ```
@@ -29,6 +30,15 @@ go build -ldflags "-s -w" -tags tmpl
 
 1. 📂 md: 這是一個目錄，裡面放所有你想要投影的md檔案
 2. (optional ) 📜 slides.gohtml, 這是一個模板你可以抓取[預設的內容後修改](slides.gohtml), 如果你不想準備此模板，請用`go build -tags tmpl`去生成執行檔
+
+    注意! slides.gohtml裡面對於md的分隔符號是`\n`，如果你想要改成`\r\n`可以[調整為](https://github.com/CarsonSlovoka/slides/blob/84bcf2f776ffc87d4d96f051ad3a2da856b43123/slides.gohtml#L16-L17)
+
+    ```html
+    data-separator="^\r\n---\r\n"
+    data-separator-vertical="^\r\n----\r\n"
+    ```
+
+
 3. (optional ) 📂 assets: 如果你在md之中，有想要用img來加入本地的圖片，可以考慮將圖片路徑保存在此目錄。使用連結`/assets`會自動以此目錄為相對位置開始找尋
 
 啟動上可以直接
