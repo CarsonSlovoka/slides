@@ -252,7 +252,6 @@ Note:
 <section data-auto-animate>
   <pre data-id="code-animation">
     <code data-trim data-line-numbers>
-
       let planets = [
         { name: 'mars', diameter: 6779 },
       ]
@@ -261,8 +260,7 @@ Note:
 </section>
 
 <section data-auto-animate>
-  <pre data-id="code-animation"><code data-trim data-line-numbers>
-
+  <pre data-id="code-animation"><code data-trim data-line-numbers="1|2-4|">
     let planets = [
       { name: 'mars', diameter: 6779 },
       { name: 'earth', diameter: 12742 },
@@ -272,23 +270,29 @@ Note:
   </pre>
 </section>
 <section data-auto-animate>
-  <pre data-id="code-animation">
-    <code data-trim data-line-numbers>
-
+  <pre data-id="code-animation" style="height: 800px;overflow: auto">
+    <code data-trim data-line-numbers="|9|9,1-3|">
         let circumferenceReducer = ( c, planet ) => {
           return c + planet.diameter * Math.PI;
         }
-
         let planets = [
           { name: 'mars', diameter: 6779 },
           { name: 'earth', diameter: 12742 },
           { name: 'jupiter', diameter: 139820 }
         ]
         let c = planets.reduce( circumferenceReducer, 0 )
-
    </code>
   </pre>
 </section>
+
+Note:
+
+中間不能有斷行
+
+- 如果版面太小，可以調整pre的style: `style="height: 800px;overflow: auto"`
+- data-line-numbers: 可以有列號
+  - data-line-numbers="|1-3,5|7,11": 全亮;1到3之間都亮和第5列也亮;只亮7,11列
+  - 如果要指定開始的列號，可以使用`data-ln-start-from`，例如: `data-ln-start-from="7"`
 
 ---
 
