@@ -23,6 +23,13 @@ jobs:
     steps:
       - name: Check out code into the Go module directory.
         uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+      # - name: Update specific submodules
+      #   run:
+      #     git submodule update --init --recursive reveal.js `
+      #     git submodule update --init --recursive plugin/guess `
+      #     git submodule update --init --recursive plugin/marker
       - name: Install Go.
         uses: actions/setup-go@v5
         with:
