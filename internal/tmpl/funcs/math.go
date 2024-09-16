@@ -6,25 +6,30 @@ import (
 	"reflect"
 )
 
-func Add(values ...any) (any, error) {
+func arithmetic(values []any, computeFunc func(a *reflect.Value, b reflect.Value) error) (any, error) {
 	if len(values) == 0 {
 		return 0, nil
 	}
 	firstValue := reflect.ValueOf(values[0])
-	sumValue := reflect.New(firstValue.Type()).Elem()
-	sumValue.Set(firstValue)
+	resultValue := reflect.New(firstValue.Type()).Elem()
+	resultValue.Set(firstValue)
 	for _, value := range values[1:] {
 		v := reflect.ValueOf(value)
 		if v.Type() != firstValue.Type() {
 			return nil, fmt.Errorf("type not match first: %T", values[0])
 		}
-		if err := add(&sumValue, v); err != nil {
+		if err := computeFunc(&resultValue, v); err != nil {
 			return nil, err
 		}
 	}
-	return sumValue.Interface(), nil
+	return resultValue.Interface(), nil
 }
 
+func Add(values ...any) (any, error) {
+	return arithmetic(values, add)
+}
+
+// a為 *reflect.Value 讓他成為Assignable的對象，不然會報錯
 func add(a *reflect.Value, b reflect.Value) error {
 	switch a.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
@@ -40,22 +45,7 @@ func add(a *reflect.Value, b reflect.Value) error {
 }
 
 func Mul(values ...any) (any, error) {
-	if len(values) == 0 {
-		return 0, nil
-	}
-	firstValue := reflect.ValueOf(values[0])
-	productValue := reflect.New(firstValue.Type()).Elem()
-	productValue.Set(firstValue)
-	for _, value := range values[1:] {
-		v := reflect.ValueOf(value)
-		if v.Type() != firstValue.Type() {
-			return nil, fmt.Errorf("type not match first: %T", values[0])
-		}
-		if err := mul(&productValue, v); err != nil {
-			return nil, err
-		}
-	}
-	return productValue.Interface(), nil
+	return arithmetic(values, mul)
 }
 
 func mul(a *reflect.Value, b reflect.Value) error {
@@ -81,22 +71,7 @@ func Pow(x, y float64) float64 {
 }
 
 func Min(values ...any) (any, error) {
-	if len(values) == 0 {
-		return 0, nil
-	}
-	firstValue := reflect.ValueOf(values[0])
-	minValue := reflect.New(firstValue.Type()).Elem()
-	minValue.Set(firstValue)
-	for _, value := range values[1:] {
-		v := reflect.ValueOf(value)
-		if v.Type() != firstValue.Type() {
-			return nil, fmt.Errorf("type not match first: %T", values[0])
-		}
-		if err := _min(&minValue, v); err != nil {
-			return nil, err
-		}
-	}
-	return minValue.Interface(), nil
+	return arithmetic(values, _min)
 }
 
 func _min(a *reflect.Value, b reflect.Value) error {
@@ -120,22 +95,7 @@ func _min(a *reflect.Value, b reflect.Value) error {
 }
 
 func Max(values ...any) (any, error) {
-	if len(values) == 0 {
-		return 0, nil
-	}
-	firstValue := reflect.ValueOf(values[0])
-	maxValue := reflect.New(firstValue.Type()).Elem()
-	maxValue.Set(firstValue)
-	for _, value := range values[1:] {
-		v := reflect.ValueOf(value)
-		if v.Type() != firstValue.Type() {
-			return nil, fmt.Errorf("type not match first: %T", values[0])
-		}
-		if err := _max(&maxValue, v); err != nil {
-			return nil, err
-		}
-	}
-	return maxValue.Interface(), nil
+	return arithmetic(values, _max)
 }
 
 func _max(a *reflect.Value, b reflect.Value) error {
