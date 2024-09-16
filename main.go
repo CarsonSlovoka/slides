@@ -5,6 +5,7 @@ import (
 	"embed"
 	"flag"
 	"fmt"
+	flag2 "github.com/CarsonSlovoka/slides/internal/flag"
 	http2 "github.com/CarsonSlovoka/slides/internal/http"
 	"github.com/CarsonSlovoka/slides/internal/markdown"
 	"github.com/CarsonSlovoka/slides/internal/tmpl/funcs"
@@ -233,10 +234,12 @@ var mdFolderName string
 func main() {
 	var enableTls bool
 	var port int
+	var customizeFilesystem flag2.SliceFlags
 
 	flag.BoolVar(&enableTls, "tls", false, "Enable TLS")
 	flag.IntVar(&port, "port", 8080, "port number")
 	flag.StringVar(&mdFolderName, "md", "md", "md folder")
+	flag.Var(&customizeFilesystem, "fs", "-fs 'pages' -fs 'static'")
 	flag.Parse()
 
 	mux := http.NewServeMux()
@@ -246,6 +249,9 @@ func main() {
 	mux.HandleFunc(fmt.Sprintf("GET /%s", mdFolderName), HandleListMD)
 	mux.HandleFunc(fmt.Sprintf("GET /%s/{mdPath...}", mdFolderName), HandleMD)
 	mux.Handle("GET /assets/", http.FileServer(http.Dir(".")))
+	for _, dirName := range customizeFilesystem {
+		mux.Handle(fmt.Sprintf("GET /%s/", dirName), http.FileServer(http.Dir(".")))
+	}
 
 	// 我們內嵌的plugin
 	mux.Handle("GET /slides/plugin/", http.StripPrefix("/slides/", http.FileServerFS(pluginFS)))
