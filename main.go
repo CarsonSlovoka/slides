@@ -161,6 +161,10 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 	if theme == "" {
 		theme = "black"
 	}
+	var showNotes bool
+	if query["showNotes"] != nil {
+		showNotes = true
+	}
 
 	view := query.Get("view")
 
@@ -203,6 +207,7 @@ func HandleMD(w http.ResponseWriter, r *http.Request) {
 		"Theme":     theme,
 		"View":      view,
 		"AutoSlide": autoSlide,
+		"ShowNotes": showNotes, // 如果啟用, 則註解會直接出現在投影片(主要是用於print-pdf時，可以將註解也納入)
 	}); err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)

@@ -2,6 +2,10 @@
 
 > 👉 [/{{.MDName}}](/{{.MDName}})
 
+## Hotkey
+
+查看預設reveal.js提供的熱鍵，可按下<kbd>?</kbd>
+
 ## USAGE
 
 1. (Optional)在你的工作目錄新增[slides.gohtml](https://github.com/CarsonSlovoka/slides/blob/master/slides.gohtml)，你可以適當的修改
@@ -27,6 +31,8 @@
 ```
 
 > demo: [{{.MDName}}/example.md?print-pdf](/{{.MDName}}/example.md?print-pdf)
+>
+> pdf(含註解範例): [{{.MDName}}/layout.md?print-pdf&showNotes](/{{.MDName}}/layout.md?print-pdf&showNotes): 請添加`showNotes`參數即可
 
 ❗ 列印的時候，請選擇 `更多設定`，調整如下: (否則有的版面會很奇怪)
 
@@ -56,3 +62,7 @@ theme=[?](https://github.com/hakimel/reveal.js/tree/472535065c7525abf0cc9df51c66
 按下快捷鍵<kbd>A</kbd>可以Toggle
 
 > demo: [{{.MDName}}/example.md?autoSlide=5000](/{{.MDName}}/example.md?autoSlide=5000)
+
+### showNotes
+
+> demo [{{.MDName}}/layout.md?showNotes](/{{.MDName}}/layout.md?showNotes)
