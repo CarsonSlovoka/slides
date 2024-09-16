@@ -125,11 +125,13 @@ func HandleTxt(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 用go template處理之後再返回
-	tmpl := htmlTemplate.New("").Funcs(map[string]any{
-		"dict":       funcs.Dict,
-		"list":       funcs.List, // slice 已經是保留字了，所以用list
-		"unsafeHTML": func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
-	})
+	maps := funcs.Maps{
+		"dict": funcs.Dict,
+		"list": funcs.List, // slice 已經是保留字了，所以用list
+	}.AddMaps(funcs.MathMaps()).Add(
+		"unsafeHTML", func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
+	)
+	tmpl := htmlTemplate.New("").Funcs(maps)
 	tmpl, err = tmpl.Parse(string(bs))
 	if err != nil {
 		log.Printf("%s: %s\n", mdPath, err)

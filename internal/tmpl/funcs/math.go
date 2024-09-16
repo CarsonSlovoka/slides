@@ -6,6 +6,17 @@ import (
 	"reflect"
 )
 
+func MathMaps() Maps {
+	return Maps{
+		"add": Add,
+		"mul": Mul,
+		"mod": Mod,
+		"pow": Pow,
+		"min": Min,
+		"max": Max,
+	}
+}
+
 func arithmetic(values []any, computeFunc func(a *reflect.Value, b reflect.Value) error) (any, error) {
 	if len(values) == 0 {
 		return 0, nil
