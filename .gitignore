@@ -1,6 +1,7 @@
 *.exe
 *.pdf
 *.png
+coverage.txt
 
 # 此目錄由build.go所建立
 bin/*
