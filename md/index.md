@@ -24,6 +24,6 @@
     {{$theme = index $themeSlice (mod $i (len $themeSlice))}}
   {{end}}
   {{$textContent := index $item 2}}
-  {{unsafeHTML ( printf "<li class='fragment'><a href='%s?theme=%s' target='_blank'>%s</a></li>" $href $theme $textContent )}}
+  {{printf "<li class='fragment'><a href='%s?theme=%s' target='_blank'>%s</a></li>" $href $theme $textContent }}
 {{end}}
 </ul>

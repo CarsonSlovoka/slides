@@ -129,10 +129,8 @@ func HandleTxt(w http.ResponseWriter, r *http.Request) {
 	maps := funcs.Maps{
 		"dict": funcs.Dict,
 		"list": funcs.List, // slice 已經是保留字了，所以用list
-	}.AddMaps(funcs.MathMaps()).Add(
-		"unsafeHTML", func(s string) htmlTemplate.HTML { return htmlTemplate.HTML(s) },
-	)
-	tmpl := htmlTemplate.New("").Funcs(maps)
+	}.AddMaps(funcs.MathMaps())
+	tmpl := textTemplate.New("").Funcs(textTemplate.FuncMap(maps))
 	tmpl, err = tmpl.Parse(string(bs))
 	if err != nil {
 		log.Printf("%s: %s\n", mdPath, err)
@@ -140,6 +138,7 @@ func HandleTxt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err = tmpl.Execute(w, nil); err != nil {
+		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
