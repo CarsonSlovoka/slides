@@ -251,11 +251,13 @@ var mdFolderName string
 func main() {
 	var enableTls bool
 	var port int
+	var host string
 	var customizeFilesystem flag2.SliceFlags
 
 	flag.BoolVar(&enableTls, "tls", false, "Enable TLS")
 	flag.IntVar(&port, "port", 8080, "port number")
 	flag.StringVar(&mdFolderName, "md", "md", "md folder")
+	flag.StringVar(&host, "host", "127.0.0.1", "") // 如果要區網運行可以改成空白, 如果要使用docker，就要用區網，才能被外部訪問
 	flag.Var(&customizeFilesystem, "fs", "-fs 'pages' -fs 'static'")
 	flag.Parse()
 
@@ -287,7 +289,7 @@ func main() {
 
 	go func() {
 		log.Printf("Server is running on http://127.0.0.1:%d\n", port)
-		if err := http.ListenAndServe(fmt.Sprintf("127.0.0.1:%d", port), mux); err != nil {
+		if err := http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), mux); err != nil {
 			log.Fatal(err)
 		}
 	}()
