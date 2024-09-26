@@ -3,6 +3,7 @@ package funcs
 import (
 	"errors"
 	"reflect"
+	"strings"
 )
 
 func Dict(values ...any) (map[string]any, error) {
@@ -52,4 +53,8 @@ func List(args ...any) any {
 		slice.Index(i).Set(reflect.ValueOf(arg))
 	}
 	return slice.Interface() // {interface() | []yourType
+}
+
+func Join(sep string, s ...string) string {
+	return strings.Join(s, sep)
 }

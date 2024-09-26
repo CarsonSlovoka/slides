@@ -1,0 +1,11 @@
+.highlight-line .hljs-comment {
+  color: #70ff07 !important;
+  background-color: #000 !important;
+  font-style: italic;
+  font-size: large;
+}
+
+.highlight-line .hljs-ln-code {
+  color: yellow !important;
+  font-size: large;
+}

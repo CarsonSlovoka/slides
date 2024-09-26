@@ -108,6 +108,14 @@ func HandleListMD(w http.ResponseWriter, r *http.Request) {
 	_, _ = fmt.Fprintf(w, html)
 }
 
+func getBaseURL(r *http.Request) string {
+	scheme := "http"
+	if r.TLS != nil {
+		scheme = "https"
+	}
+	return fmt.Sprintf("%s://%s", scheme, r.Host)
+}
+
 // HandleTxt 回傳md目錄下的檔案內容，視為純文本
 func HandleTxt(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
@@ -127,8 +135,11 @@ func HandleTxt(w http.ResponseWriter, r *http.Request) {
 
 	// 用go template處理之後再返回
 	maps := funcs.Maps{
-		"dict": funcs.Dict,
-		"list": funcs.List, // slice 已經是保留字了，所以用list
+		"dict":    funcs.Dict,
+		"list":    funcs.List, // slice 已經是保留字了，所以用list
+		"join":    funcs.Join,
+		"txtFrom": funcs.TxtFrom,
+		"tmpl":    funcs.Tmpl,
 	}.AddMaps(funcs.MathMaps())
 	tmpl := textTemplate.New("").Funcs(textTemplate.FuncMap(maps))
 	tmpl, err = tmpl.Parse(string(bs))
@@ -137,7 +148,9 @@ func HandleTxt(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	if err = tmpl.Execute(w, nil); err != nil {
+	if err = tmpl.Execute(w, map[string]any{
+		"BaseURL": getBaseURL(r),
+	}); err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

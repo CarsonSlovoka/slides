@@ -1,0 +1,3 @@
+:is(li, a, span).current-fragment {
+  color: #ff5a00;
+}
