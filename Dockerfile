@@ -40,3 +40,7 @@ WORKDIR /usr/local/bin
 
 # 將build流程中的 /slides/slides.exe 複製到 當前目錄(也就是/usr/local/bin)
 COPY --from=build /slides/slides .
+
+# WORKDIR /slidesSRC
+# 你可以把所有內容全部都丟到某個目錄，啟動後可以觀看到build透過COPY . .的所有內容，再去填寫dockerignore即可
+# COPY --from=build /slides/ ./FILES/

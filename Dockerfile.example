@@ -1,0 +1,25 @@
+# docker build -t MyDocs:20240927 .
+# docker run -e PORT=9000 -p 9000:9000 --name MyDocs MyDocs:20240927
+
+# slides:v0.2.0.alpha 已經包含slides.exe以及作業系統:alpine
+
+FROM slides:v0.2.0.alpha AS slides
+
+# 你只需要把md文件和相關檔案copy即可
+WORKDIR /MyDocs
+COPY assets/ ./assets/
+COPY pages/ ./pages/
+COPY docs/ ./docs/
+COPY static/ ./static/
+COPY tmpl/ ./tmpl/
+
+ENV PORT=8651
+
+# slides放在/usr/local/bin，此路徑預設會在PATH之中，所以能直接抓到
+CMD slides \
+    -host "" -port "${PORT}" \
+    -md "docs" \
+    -fs "pages" \
+    -fs "static" \
+    -fs "tmpl"
+

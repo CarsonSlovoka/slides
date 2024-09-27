@@ -108,6 +108,8 @@ func HandleListMD(w http.ResponseWriter, r *http.Request) {
 	_, _ = fmt.Fprintf(w, html)
 }
 
+// 請注意，如果你是透過代理，那麼端口號要是相同的
+// 否則它會抓你的代理port，但是這個代理port並不能代表本server要的port，就會出錯
 func getBaseURL(r *http.Request) string {
 	scheme := "http"
 	if r.TLS != nil {
