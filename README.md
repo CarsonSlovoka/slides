@@ -56,6 +56,17 @@ slides.exe -md="mySlides"
 slides.exe -tls
 ```
 
+## Docker
+
+建立slides的image
+```
+docker build -t slides:v0.2.0.alpha .
+```
+
+在您的其他專案可以應用其image，
+
+可以參考[Dockerfile.example](Dockerfile.example)
+
 ## Plugin 自定義插件
 
 可以參考[此commit](https://github.com/CarsonSlovoka/slides/commit/b239af8f9b9ffcf27bbb8b00e46e9f2fb516cf47)

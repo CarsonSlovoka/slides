@@ -1,8 +1,12 @@
 # docker build -t MyDocs:20240927 .
+# 啟動container
 # docker run -e PORT=9000 -p 9000:9000 --name MyDocs MyDocs:20240927
+# 匯出你的image
+# docker save -o MyDocs.tar MyDocs:20240927
+# 匯入
+# docker load -i MyDocs.tar
 
 # slides:v0.2.0.alpha 已經包含slides.exe以及作業系統:alpine
-
 FROM slides:v0.2.0.alpha AS slides
 
 # 你只需要把md文件和相關檔案copy即可
@@ -22,4 +26,3 @@ CMD slides \
     -fs "pages" \
     -fs "static" \
     -fs "tmpl"
-
