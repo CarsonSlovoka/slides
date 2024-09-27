@@ -8,17 +8,18 @@ FROM golang:${GO_VERSION} AS build
 # 工作目錄不存在會自己建立
 WORKDIR /slides
 
-# COPY . . 全部複製
-COPY go.mod go.sum ./
-COPY slides.gohtml ./
-COPY *.go .
-COPY app/*.go ./app/
-COPY assets/* ./assets/
-COPY internal/ ./internal/
-COPY md/* ./md/
-COPY help.md ./help.md
-COPY plugin/ ./plugin/
-COPY reveal.js/ ./reveal.js/
+# .dockerignore 寫好，就可以直接COPY . .
+COPY . .
+# COPY go.mod go.sum ./
+# COPY slides.gohtml ./
+# COPY *.go .
+# COPY app/*.go ./app/
+# COPY assets/* ./assets/
+# COPY internal/ ./internal/
+# COPY md/* ./md/
+# COPY help.md ./help.md
+# COPY plugin/ ./plugin/
+# COPY reveal.js/ ./reveal.js/
 RUN go mod tidy
 RUN go mod download -x
 
@@ -41,6 +42,9 @@ COPY --from=build /slides/md/ ./md/
 # bin/md
 
 COPY --from=build /slides/assets/ ./assets/
+
+# 你可以把所有內容全部都丟到某個目錄，啟動後可以觀看到build透過COPY . .的所有內容，再去填寫dockerignore即可
+# COPY --from=build /slides/ ./FILES/
 
 # docker run -p 8080:8651 --name slidesDemo slides:v0.2.0.alpha
 # 曝露給外部的port是8080, 而docker裡面用的是8651
