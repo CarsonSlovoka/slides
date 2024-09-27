@@ -28,24 +28,15 @@ RUN go mod download -x
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w" -tags tmpl -o slides .
 # /slides/slides.exe
 
+# 如果省略了執行環境，只有基底映像: golang:${GO_VERSION}，那麼出來的Image size會相當大，數百MB
+
+# 加上執行環境，這使得最終的映像只包含Alpine基本系統文件、和我們所編譯的slides執行檔，Image size只有幾十MB而已
 # 選擇執行環境
 FROM alpine:latest
 
-WORKDIR /bin
+# WORKDIR /bin # 這通常放系統執行檔
 
-# 將build流程中的 /slides/slides.exe 複製到 當前目錄(也就是bin)
+WORKDIR /usr/local/bin
+
+# 將build流程中的 /slides/slides.exe 複製到 當前目錄(也就是/usr/local/bin)
 COPY --from=build /slides/slides .
-# bin/slides.exe
-
-# COPY --from=build /slides/md/ . # 這是錯的，複製資料夾後面要加上目錄路徑，不然複製不過去
-COPY --from=build /slides/md/ ./md/
-# bin/md
-
-COPY --from=build /slides/assets/ ./assets/
-
-# 你可以把所有內容全部都丟到某個目錄，啟動後可以觀看到build透過COPY . .的所有內容，再去填寫dockerignore即可
-# COPY --from=build /slides/ ./FILES/
-
-# docker run -p 8080:8651 --name slidesDemo slides:v0.2.0.alpha
-# 曝露給外部的port是8080, 而docker裡面用的是8651
-CMD ["./slides", "-md", "md", "-port", "8651", "-host", ""]
