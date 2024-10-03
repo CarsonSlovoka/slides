@@ -256,6 +256,8 @@ func main() {
 	var host string
 	var customizeFilesystem flag2.SliceFlags
 
+	log.Println(os.Args) // 方便確定docker運行時的參數內容
+
 	flag.BoolVar(&enableTls, "tls", false, "Enable TLS")
 	flag.IntVar(&port, "port", 8080, "port number")
 	flag.StringVar(&mdFolderName, "md", "md", "md folder")

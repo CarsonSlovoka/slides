@@ -1,4 +1,4 @@
-# docker build -t slides:v0.2.0.alpha .
+# docker build -t slides:v0.2.0.alpha -f Dockerfile .
 # docker run -p 8080:8651 --name containers的名稱 實際image名稱:該image使用的tag名稱
 # docker run -p 8080:8651 --name slidesDemo slides:v0.2.0.alpha
 
