@@ -58,14 +58,25 @@ slides.exe -tls
 
 ## Docker
 
-建立slides的image
-```
-docker build -t slides:v0.2.0.alpha .
-```
+提供兩種方法
 
-在您的其他專案可以應用其image，
+1. 使用[carsonTseng/slides](https://hub.docker.com/layers/carsontseng/slides/v0.2.0/images/sha256-99243e1e2dbc0ec22ad8e1b849cbdc6340ca51f80b7dbe2d4444f3a70693fc3d): 把slides當作image, 所以你還要自己額外寫Dockerfile才可以看到結果，可以參考[Dockerfile.example](docker/Dockerfile.example)
+2. 使用[carsonTseng/slides-cmd](https://hub.docker.com/repository/docker/carsontseng/slides-cmd/general): 好處是你不需要再寫Dockerfile，可以利用綁定掛載(Bind mounts)的方式,來讀取到要被渲染的內容，請參考以下範例
 
-可以參考[Dockerfile.example](Dockerfile.example)
+    ```yaml
+    # 使用powershell
+    docker run -p 8080:8080 -e PORT=8080 `
+      -e MD_DIR="docs" ` # 放到md的所在目錄
+      -v .\docs:/usr/local/bin/docs ` # 後面的docs需與MD_DIR所指定的目錄相同
+      -v .\slides.gohtml/:/usr/local/bin/slides.gohtml ` # 可選，如果你需要自定義slides.gohtml也可以告知
+      -v .\assets:/usr/local/bin/assets ` # 可選(assets目錄，預設就會被當成fs，不需要再加到FS_DIRS去)
+      -e FS_DIRS="pages,static,tmpl" ` # 即 -fs pages -f static -fs tmpl
+      -v .\pages:/usr/local/bin/pages ` # 這些內容對應於 FS_DIRS # 其中的.\docs應該於您目前的工作目錄中能找到
+      -v .\static:/usr/local/bin/static ` # 同上
+      -v .\tmpl/:/usr/local/bin/tmpl ` # 同上
+      --name my-slides-example carsontseng/slides-cmd:v0.2.0
+    ```
+
 
 ## Plugin 自定義插件
 
