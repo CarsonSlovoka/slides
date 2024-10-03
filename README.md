@@ -60,7 +60,7 @@ slides.exe -tls
 
 提供兩種方法
 
-1. 使用[carsonTseng/slides](https://hub.docker.com/layers/carsontseng/slides/v0.2.0/images/sha256-99243e1e2dbc0ec22ad8e1b849cbdc6340ca51f80b7dbe2d4444f3a70693fc3d): 把slides當作image, 所以你還要自己額外寫Dockerfile才可以看到結果，可以參考[Dockerfile.example](docker/Dockerfile.example)
+1. 使用[carsonTseng/slides](https://hub.docker.com/layers/carsontseng/slides/v0.2.0/images/sha256-99243e1e2dbc0ec22ad8e1b849cbdc6340ca51f80b7dbe2d4444f3a70693fc3d): [把slides當作image](https://github.com/CarsonSlovoka/slides/blob/b5166bdd88e1af3a89651e399a744f6c807dc2f9/docker/Dockerfile.example#L10), 所以你還要自己額外寫Dockerfile才可以看到結果，可以參考[Dockerfile.example](docker/Dockerfile.example)
 2. 使用[carsonTseng/slides-cmd](https://hub.docker.com/repository/docker/carsontseng/slides-cmd/general): 好處是你不需要再寫Dockerfile，可以利用綁定掛載(Bind mounts)的方式,來讀取到要被渲染的內容，請參考以下範例
 
     ```yaml
