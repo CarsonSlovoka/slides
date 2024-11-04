@@ -16,11 +16,6 @@ if [ -n "$FS_DIRS" ]; then
 #    FS_ARGS+=("-fs" "pages")
 fi
 
-# slides -md=docs -fs pages -fs static -fs tmpl
-docker run -p 8080:8080 -e PORT=8080 -e MD_DIR="docs" -e FS_DIRS="pages,static,tmpl" -v ./docs:/docs -v ./static:/static -v ./tmpl/:/tmpl --name SlidesCmd slides-cmd:v0.2.0
-
-
-
 exec slides \
     -host "$HOST" \
     -port "$PORT" \

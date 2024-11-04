@@ -74,7 +74,7 @@ slides.exe -tls
       -v .\pages:/usr/local/bin/pages ` # 這些內容對應於 FS_DIRS # 其中的.\docs應該於您目前的工作目錄中能找到
       -v .\static:/usr/local/bin/static ` # 同上
       -v .\tmpl/:/usr/local/bin/tmpl ` # 同上
-      --name my-slides-example carsontseng/slides-cmd:v0.2.0
+      --name my-slides-example carsontseng/slides-cmd:v0.2.1
     ```
 
 

@@ -1,5 +1,7 @@
-# docker build -t slides-cmd:v0.2.0 -f cmd.dockerfile ..
-# docker run -p 8080:8080 -e PORT=8080 -e MD_DIR="/docs" -e FS_DIRS="/pages,/static,/tmpl" --name SlidesCmd slides-cmd:v0.2.0
+# .. 表示工作路徑位置
+# docker build -t slides-cmd:v0.2.1 -f cmd.dockerfile ..
+# slides -md=docs -fs pages -fs static -fs tmpl
+# docker run -p 8080:8080 -e PORT=8080 -e MD_DIR="/docs" -e FS_DIRS="/pages,/static,/tmpl" --name SlidesCmd slides-cmd:v0.2.1
 
 ARG GO_VERSION=1.23.0
 FROM golang:${GO_VERSION} AS build
